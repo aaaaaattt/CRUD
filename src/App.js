@@ -21,6 +21,7 @@ function App() {
     }
   ]; 
   const [todo, setTodo] = useState(mockTodo);
+
    
 // 할 일 목록에 추가
   const onCreate = (content) => { 
