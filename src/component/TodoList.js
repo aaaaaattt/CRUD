@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./TodoList.css";
 
 
-const TodoList = ({todo}) =>{
+const TodoList = ({todo,onUpdate}) =>{
     const [search, setSearch] = useState("");
     const onChangeSearch = (e) =>{
         setSearch(e.target.value);
@@ -25,7 +25,7 @@ const TodoList = ({todo}) =>{
             placeholder="검색어를 입력하세요" />
             <div className="list_wrapper" >
                 {getSearchResult().map((it)=>(
-                    <TodoItem {...it} key={it.id}/>
+                    <TodoItem {...it} key={it.id} onUpdate={onUpdate}/>
                 ))} 
             </div>
         </div>

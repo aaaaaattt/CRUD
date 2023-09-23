@@ -5,6 +5,7 @@ import TodoEditor from './component/TodoEditor';
 import TodoList from './component/TodoList';
 import { useState,useRef } from 'react';
 function App() {
+
   const idref = useRef(3);
   const mockTodo = [
     {
@@ -21,6 +22,15 @@ function App() {
     }
   ]; 
   const [todo, setTodo] = useState(mockTodo);
+
+  const onUpdate = (targetId) => {
+    setTodo(
+      todo.map((it)=>
+      it.id === targetId ? {...it, isDone: !it.isDone} : it
+      )
+    );
+  };
+  
 
    
 // 할 일 목록에 추가
@@ -39,7 +49,7 @@ function App() {
     <div className="App">
       <Header />
       <TodoEditor onCreate={onCreate}/>
-      <TodoList todo={todo}/>
+      <TodoList todo={todo} onUpdate={onUpdate}/>
     </div>
     );
 }
