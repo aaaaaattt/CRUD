@@ -22,14 +22,6 @@ function App() {
     }
   ]; 
   const [todo, setTodo] = useState(mockTodo);
-
-  const onUpdate = (targetId) => {
-    setTodo(
-      todo.map((it)=>
-      it.id === targetId ? {...it, isDone: !it.isDone} : it
-      )
-    );
-  };
   
 
    
@@ -45,11 +37,25 @@ function App() {
     idref.current += 1;
   };
 
+  //업데이트
+  const onUpdate = (targetId) => {
+    setTodo(
+      todo.map((it)=>
+      it.id === targetId ? {...it, isDone: !it.isDone} : it
+      )
+    );
+  };
+
+  //삭제
+  const onDelete = (targetId) => {
+    setTodo(todo.filter((it)=>it.id !== targetId));
+  };
+
   return (
     <div className="App">
       <Header />
       <TodoEditor onCreate={onCreate}/>
-      <TodoList todo={todo} onUpdate={onUpdate}/>
+      <TodoList todo={todo} onUpdate={onUpdate} onDelete={onDelete}/>
     </div>
     );
 }
