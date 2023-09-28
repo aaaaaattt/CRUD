@@ -1,4 +1,3 @@
-import userEvent from '@testing-library/user-event';
 import './App.css';
 import Header from './component/Header';
 import TodoEditor from './component/TodoEditor';
