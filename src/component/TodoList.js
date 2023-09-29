@@ -1,5 +1,5 @@
 import TodoItem from "./TodoItem";
-import { useMemo,useRef,useReducer} from "react";
+import { useMemo} from "react";
 import { useState } from "react";
 import "./TodoList.css";
 
@@ -28,7 +28,6 @@ const [search, setSearch] = useState("");
         };
     }, [todo]);
 
-    
     const { totalCount, doneCount, notDoneCount } = analyzeTodo;
 
     return(
@@ -48,7 +47,7 @@ const [search, setSearch] = useState("");
                 {getSearchResult().map((it)=>(
                     <TodoItem 
                     {...it} 
-                    key={it.id} 
+                    key={it.id}
                     onUpdate={onUpdate}
                     onDelete={onDelete}
                     />

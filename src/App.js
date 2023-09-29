@@ -4,6 +4,8 @@ import TodoEditor from './component/TodoEditor';
 import TodoList from './component/TodoList';
 import { useReducer, useRef } from 'react';
 import TestComp from './component/TestComp';
+import { useCallback } from 'react';
+
 
 function reducer(state, action) {
   switch(action.type){
@@ -16,6 +18,7 @@ function reducer(state, action) {
       ? {
         ...it,
         isDone: !it.isDone,
+        key : it.id
         }
       :it
       );
@@ -61,20 +64,20 @@ const idref = useRef(3);
   };
 
   //Update업데이트
-  const onUpdate = (targetId) => {
+  const onUpdate = useCallback((targetId) => {
     dispatch({
       type: "UPDATE",
-      targetId
-    })
-  };
+      targetId,
+    });
+  },[]);
 
   //Delete삭제
-  const onDelete = (targetId) => {
+  const onDelete = useCallback((targetId) => {
     dispatch({
       type: "DELETE",
       targetId,
     });
-  };
+  },[]);
 
   return (
     <div className="App">

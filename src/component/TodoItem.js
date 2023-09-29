@@ -1,8 +1,10 @@
 import "./TodoItem.css";
 import React from "react";
 
-const TodoItem = ({id,content,isDone,createdDate,onUpdate, onDelete}) => {
+const TodoItem = ({id,content,isDone,createdDate,key,onUpdate, onDelete}) => {
+    
     console.log(`${id} TodoItem 업데이트`);
+    // console.log(`${}`)
     const onChangeCheckbox = () =>{
         onUpdate(id)
     }
