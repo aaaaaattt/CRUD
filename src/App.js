@@ -2,11 +2,32 @@ import './App.css';
 import Header from './component/Header';
 import TodoEditor from './component/TodoEditor';
 import TodoList from './component/TodoList';
-import { useState,useRef } from 'react';
+import { useReducer, useRef } from 'react';
 import TestComp from './component/TestComp';
-function App() {
 
-  const idref = useRef(3);
+function reducer(state, action) {
+  switch(action.type){
+    case "CREATE": {
+      return [action.newItem, ...state];
+    }
+    case "UPDATE": {
+      return state.map((it) =>
+      it.id === action.targetId
+      ? {
+        ...it,
+        isDone: !it.isDone,
+        }
+      :it
+      );
+    }
+    case "DELETE": {
+      return state.filter((it) => it.id !== action.targetId);
+    }
+    default:
+      return state;
+  }
+}
+function App() {
   const mockTodo = [
     {
       id : 1,
@@ -20,35 +41,39 @@ function App() {
       isDone: false,
       createdDate: new Date().getTime()
     }
-  ]; 
-  const [todo, setTodo] = useState(mockTodo);
-  
+  ];
+const [todo, dispatch] = useReducer(reducer, mockTodo);
+const idref = useRef(3);
 
    
-// 할 일 목록에 추가
+//Create추가
   const onCreate = (content) => { 
-    const newItem ={
-      id : idref.current,
-      content,
-      isDone: false,
-      createdDate: new Date().getTime(),
-    };
-    setTodo([newItem,...todo]);
-    idref.current += 1;
+    dispatch({
+      type: "CREATE",
+      newItem : {
+        id: idref.cureent,
+        content,
+        isDone : false,
+        createdDate: new Date().getTime(),
+      },
+    });
+  idref.current += 1;
   };
 
-  //업데이트
+  //Update업데이트
   const onUpdate = (targetId) => {
-    setTodo(
-      todo.map((it)=>
-      it.id === targetId ? {...it, isDone: !it.isDone} : it
-      )
-    );
+    dispatch({
+      type: "UPDATE",
+      targetId
+    })
   };
 
-  //삭제
+  //Delete삭제
   const onDelete = (targetId) => {
-    setTodo(todo.filter((it)=>it.id !== targetId));
+    dispatch({
+      type: "DELETE",
+      targetId,
+    });
   };
 
   return (
