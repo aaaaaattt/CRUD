@@ -1,7 +1,12 @@
 import "./TodoEditor.css";
-import { useState,useRef } from "react";
+import {useContext, useState,useRef } from "react";
+import { TodoContext } from "../App";
+import { TodoDispatchContext } from "../App";
 
-    const TodoEditor= ({onCreate}) => {
+    const TodoEditor= () => {
+
+    const {onCreate} = useContext(TodoDispatchContext);
+
     const inputRef = useRef('');
     const [content,setContent] = useState('');
     
@@ -17,9 +22,8 @@ import { useState,useRef } from "react";
     }
 
     const onKeyDown = (e) => {
-        if(e.keyCode == 13){
+        if(e.keyCode === 13){
             onSubmit();
-            
         }
     }
     return(
@@ -34,10 +38,8 @@ import { useState,useRef } from "react";
                 onKeyDown={onKeyDown}
                 />
                 <button 
-                
                 onClick={onSubmit}>추가</button>
             </div>
-            
         </div>
     ) 
 };

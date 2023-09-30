@@ -1,10 +1,12 @@
 import TodoItem from "./TodoItem";
-import { useMemo} from "react";
-import { useState } from "react";
+import { useMemo,useState,useContext} from "react";
+import { TodoStateContext } from "../App";
 import "./TodoList.css";
 
+const TodoList = () =>{
+    const todo = useContext(TodoStateContext);
 
-const TodoList = ({todo,onUpdate, onDelete}) =>{
+
 const [search, setSearch] = useState("");
     const onChangeSearch = (e) =>{
         setSearch(e.target.value);
@@ -30,6 +32,9 @@ const [search, setSearch] = useState("");
 
     const { totalCount, doneCount, notDoneCount } = analyzeTodo;
 
+
+    
+
     return(
         <div className="TodoList">
             <h4>Todo List</h4>
@@ -45,15 +50,19 @@ const [search, setSearch] = useState("");
             placeholder="검색어를 입력하세요" />
             <div className="list_wrapper" >
                 {getSearchResult().map((it)=>(
-                    <TodoItem 
+                    <TodoItem   
                     {...it} 
                     key={it.id}
-                    onUpdate={onUpdate}
-                    onDelete={onDelete}
                     />
                 ))} 
             </div>
         </div>
     ) 
 };
+
+
+TodoList.defaultProps = {
+    todo: [],
+};
+
 export default TodoList;
